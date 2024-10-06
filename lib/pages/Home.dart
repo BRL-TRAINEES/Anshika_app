@@ -16,9 +16,7 @@ class _HomeState extends State<Home> {
   }
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(50,25, 100, 1),
           title: Text('Home Page' , style: TextStyle(color: Colors.white),),
@@ -32,8 +30,8 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(onPressed: signout,
           child: Icon(Icons.login_rounded,),
         ),
-      ),
-    );;
+      );
+
   }
 }
 
