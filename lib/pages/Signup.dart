@@ -16,9 +16,22 @@ class _SignupState extends State<Signup> {
   TextEditingController email= TextEditingController();
   TextEditingController password = TextEditingController();
 
+ bool isloading =false;
   signup()async{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.text, password: password.text);
-    Get.offAll(Wrapper() as Widget Function());
+    setState(() {
+      isloading=true;
+    });
+    try{
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.text, password: password.text);
+      Get.offAll(Wrapper() as Widget Function());
+    }on FirebaseAuthException catch(e){  //for firebase auth errors
+      Get.snackbar("error msg",e.code);
+    }catch(e){  //for flutter errors
+      Get.snackbar(('error msg'), e.toString());
+    }
+    setState(() {
+      isloading=false;
+    });
   }
 
   @override

@@ -1,29 +1,42 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:form/pages/forgot.dart';
-import 'package:form/pages/signup.dart';
+import 'package:form/pages/Forgot.dart';
+import 'package:form/pages/Signup.dart';
 import 'package:get/get.dart';
 
-class loginPage extends StatefulWidget {
-  const loginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<loginPage> createState() => _loginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();  //that validates the saves the form
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  void logIn()async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email.text, password: password.text); //jaise hi yha login hua wrapper me stream changes observe krega toh builder me snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
+ bool isloading =false;
+
+   logIn()async{
+     setState(() {
+       isloading=true;
+     });
+     try{
+       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email.text, password: password.text); //jaise hi yha login hua wrapper me stream changes observe krega toh snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
+     }on FirebaseAuthException catch(e){  //for firebase auth errors
+Get.snackbar("error msg",e.code);
+     }catch(e){  //for flutter errors
+Get.snackbar(('error msg'), e.toString());
+     }
+setState(() {
+  isloading=false;
+});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isloading? Center(child: CircularProgressIndicator(),):Scaffold(  //means if loading is true then loading icon show hoga else scaffold
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 80, 90, 1),
         title: Text('Login' , style: TextStyle(color: Colors.white),),
@@ -54,10 +67,11 @@ class _loginPageState extends State<loginPage> {
 
                 TextFormField(
                   controller: password,
-                  validator: (value){
+                  cursorColor: Colors.green,
                   decoration:  InputDecoration(
-                    hintText:'Password',
-                    prefixIcon: Icon(Icons.password_rounded),
+
+                    labelText:'Password',
+                    prefixIcon: Icon(Icons.password_sharp),
                     prefixIconColor: Color.fromRGBO(0, 80, 90, 1),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Color.fromRGBO(0, 80, 90, 1),width: 3),
@@ -65,6 +79,7 @@ class _loginPageState extends State<loginPage> {
                     ),
                   ),
                 ),
+
                 SizedBox(
                   width: double.infinity,
                   height: 55,
@@ -93,12 +108,17 @@ class _loginPageState extends State<loginPage> {
                   ),
                   ),
 
-                 TextButton(
-                    child: const Text('Forget password?',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 20),),
-                    onPressed: (){
-                      Get.to(()=>Forgot());
-                    },
-                  ),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     TextButton(
+                        child: const Text('Forget password?',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 20),),
+                        onPressed: (){
+                          Get.to(()=>Forgot());
+                        },
+                      ),
+                   ],
+                 ),
 
               ],
             ),
