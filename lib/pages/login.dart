@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
- import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
+import 'package:form/pages/forgot.dart';
+import 'package:form/pages/signup.dart';
+import 'package:get/get.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -11,11 +14,11 @@ class loginPage extends StatefulWidget {
 
 class _loginPageState extends State<loginPage> {
   final _formKey = GlobalKey<FormState>();  //that validates the saves the form
- TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   void logIn()async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.text, password: _password.text); //jaise hi yha login hua wrapper me stream changes observe krega toh builder me snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email.text, password: password.text); //jaise hi yha login hua wrapper me stream changes observe krega toh builder me snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
   }
 
   @override
@@ -35,19 +38,8 @@ class _loginPageState extends State<loginPage> {
               overflowSpacing:40, //set space of 20 between all the widgets present in it
               children: [
                 TextFormField(
-                  controller: _email,
+                  controller: email,
                   cursorColor: Colors.green,
-                  validator: (value){
-                    if(value==null)
-                    {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('.')||!value.contains('@')) {
-                      return 'Please enter a valid email';
-
-                    }
-                    return null;
-                  },
                   decoration:  InputDecoration(
 
                     labelText:'Email ID',
@@ -61,31 +53,8 @@ class _loginPageState extends State<loginPage> {
                 ),
 
                 TextFormField(
-                  controller: _password,
+                  controller: password,
                   validator: (value){
-                    if(value==null)
-                    {
-                      return 'Please enter your password';
-                    }
-                    if (value.length<8) {
-                      return 'Minimum 8 characters required';
-
-                    }
-                    if(!RegExp(r'[A-Z]').hasMatch(value)){
-                      return 'Password requires atleast one uppercase letter';
-                    }
-                    if (!RegExp(r'[a-z]').hasMatch(value)) {
-                      return 'Password must contain atleast one lowercase letter';
-                    }
-                    if (!RegExp(r'[0-9]').hasMatch(value)) {
-                      return 'Password must contain at least one digit';
-
-                    }
-                    if (!RegExp('[!@#%\$^&*(),.?":{}|<>]').hasMatch(value)) {
-                      return 'Password must contain at least one special character';
-                    }
-                    return null;
-                  },
                   decoration:  InputDecoration(
                     hintText:'Password',
                     prefixIcon: Icon(Icons.password_rounded),
@@ -108,19 +77,28 @@ class _loginPageState extends State<loginPage> {
                     onPressed:logIn,
                   ),
                 ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   height:
-                //   55,
-                //
-                //   child: ElevatedButton(
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: Color.fromRGBO(0, 80, 90, 1),
-                //     ),
-                //     child: const Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 20),),
-                //     onPressed:loginIn,
-                //   ),
-                //   ),
+                SizedBox(
+                  width: double.infinity,
+                  height:
+                  55,
+
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(0, 80, 90, 1),
+                    ),
+                    child: const Text('SignUp',style: TextStyle(color: Colors.white,fontSize: 20),),
+                    onPressed: (){
+                      Get.to(()=>Signup());
+                    },
+                  ),
+                  ),
+
+                 TextButton(
+                    child: const Text('Forget password?',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 20),),
+                    onPressed: (){
+                      Get.to(()=>Forgot());
+                    },
+                  ),
 
               ],
             ),

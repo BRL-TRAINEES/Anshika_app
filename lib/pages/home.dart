@@ -23,7 +23,7 @@ class _homeState extends State<home> {
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Center(
-          child: Text('Congrulations ! You have successfull loged in', style: TextStyle(color: Color.fromRGBO(50,25, 100, 1),fontSize: 40,fontWeight: FontWeight.bold),),
+          child: Text('Welcome to the app', style: TextStyle(color: Color.fromRGBO(50,25, 100, 1),fontSize: 40,fontWeight: FontWeight.bold),),
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: signout,
