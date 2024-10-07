@@ -51,6 +51,12 @@ setState(() {
               overflowSpacing:40, //set space of 20 between all the widgets present in it
               children: [
                 TextFormField(
+                  validator: (value){
+                    if(value==null || value.isEmpty){
+                      return 'Please Enter valid Email';
+                    }
+                    return null;
+                  },
                   controller: email,
                   cursorColor: Colors.green,
                   decoration:  InputDecoration(
@@ -67,6 +73,12 @@ setState(() {
 
                 TextFormField(
                   controller: password,
+                  validator: (value){
+                    if(value==null || value.isEmpty){
+                      return 'Please Enter Password';
+                    }
+                    return null;
+                  },
                   cursorColor: Colors.green,
                   decoration:  InputDecoration(
 
