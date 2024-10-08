@@ -12,7 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();  //that validates the saves the form
+  final _formKey = GlobalKey<FormState>();  //that validates and saves the form and uniquely identifies the forms
+
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -22,16 +23,19 @@ class _LoginPageState extends State<LoginPage> {
      setState(() {
        isloading=true;
      });
+
      try{
-       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email.text, password: password.text); //jaise hi yha login hua wrapper me stream changes observe krega toh snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
+       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email.text, password: password.text).then((value)=>{
+       Get.snackbar("Dear User!","Register Successful",backgroundColor: Colors.white),
+       });    //jaise hi yha login hua wrapper me stream changes observe krega toh snapshot aaygaa then abh snapshot pe data h toh hum homePage show krenge
      }on FirebaseAuthException catch(e){  //for firebase auth errors
-Get.snackbar("error msg",e.code);
+Get.snackbar("error msg",e.code,backgroundColor: Colors.white);
      }catch(e){  //for flutter errors
-Get.snackbar(('error msg'), e.toString());
+Get.snackbar(('error msg'), e.toString(),backgroundColor: Colors.white);
      }
 setState(() {
   isloading=false;
-});
+}); 
   }
 
   @override
@@ -48,19 +52,14 @@ setState(() {
           child: Form(
             key: _formKey,
             child: OverflowBar(
-              overflowSpacing:40, //set space of 20 between all the widgets present in it
+              overflowSpacing:30, //set space of 20 between all the widgets present in it
               children: [
                 TextFormField(
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return 'Please Enter valid Email';
-                    }
-                    return null;
-                  },
+
+
                   controller: email,
                   cursorColor: Colors.green,
                   decoration:  InputDecoration(
-
                     labelText:'Email ID',
                     prefixIcon: Icon(Icons.email_sharp),
                     prefixIconColor: Color.fromRGBO(0, 80, 90, 1),
@@ -73,20 +72,14 @@ setState(() {
 
                 TextFormField(
                   controller: password,
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return 'Please Enter Password';
-                    }
-                    return null;
-                  },
                   cursorColor: Colors.green,
+                  obscureText: true,
                   decoration:  InputDecoration(
-
                     labelText:'Password',
                     prefixIcon: Icon(Icons.password_sharp),
                     prefixIconColor: Color.fromRGBO(0, 80, 90, 1),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(0, 80, 90, 1),width: 3),
+                        borderSide: BorderSide(color: Color.fromRGBO(0, 10, 90, 1),width: 3),
                         borderRadius: BorderRadius.circular(10)
                     ),
                   ),
@@ -104,6 +97,7 @@ setState(() {
                     onPressed:logIn,
                   ),
                 ),
+                Text('Don\'t have an account?'),
                 SizedBox(
                   width: double.infinity,
                   height:

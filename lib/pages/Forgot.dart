@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 
 class Forgot extends StatefulWidget {
   const Forgot({super.key});
@@ -14,7 +14,15 @@ class _ForgotState extends State<Forgot> {
   TextEditingController email = TextEditingController();
 
   reset() async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
+      try{
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text).then((value)=>{
+          Get.snackbar('Please check!','Password reset link has been sent to your email',backgroundColor: Colors.white)
+        });
+      }on FirebaseAuthException catch(e){  //for firebase auth errors
+        Get.snackbar("error msg",e.code,backgroundColor: Colors.white);
+      }catch(e) { //for flutter errors
+        Get.snackbar(('error msg'), e.toString(),backgroundColor: Colors.white);
+      }
   }
 
   @override
@@ -33,7 +41,9 @@ class _ForgotState extends State<Forgot> {
             ),
              Row(
                mainAxisAlignment: MainAxisAlignment.center,
-              children: [ ElevatedButton(
+              children: [
+
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                   ),

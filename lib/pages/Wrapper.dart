@@ -5,7 +5,7 @@ import 'package:form/pages/Login.dart';
 import 'package:form/pages/Verify.dart';
 
 class Wrapper extends StatefulWidget {
-  const Wrapper({super.key});
+  const Wrapper({super.key});  // Constractor of wrapper accepts the key that identify the define widgets from widgets tree
 
   @override
   State<Wrapper> createState() => _WrapperState();
@@ -14,21 +14,23 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  //builder build the screen UI according to the user authentication process
     return Scaffold(
-      body: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context,snapshot){  // builder have all the snapshot of data
-           if(snapshot.hasData) { //first check if snapshot has data then check
-             print(snapshot.data);
-             if (snapshot.data!.emailVerified) { //then check is email verified at that mail
-               return Home();  //if yes go to home
-             } else {
-               return Verify();
-             }
-           }else {
-               return LoginPage();  //if snapshot have no data then go to login page
-    }
-          },),
+      body: StreamBuilder(   //StreamBuilder are powerful widgets that we mostly used with firebase that builds the UI that reacts to changes in data
+        stream: FirebaseAuth.instance.authStateChanges(),  //in streambuilder : sink is input and stream is output
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.emailVerified) {
+              return Home();
+            } else {
+              return Verify();
+            }
+          } else {
+            return LoginPage();
+          }
+        },),
     );
   }
 }
+
+//! in dart used to indicates that data is not null
