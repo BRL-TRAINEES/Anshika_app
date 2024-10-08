@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form/pages/Forgot.dart';
 import 'package:form/pages/Signup.dart';
+import 'package:form/pages/googleSignIn.dart';
+import 'package:form/pages/PhoneNumber.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController password = TextEditingController();
 
  bool isloading =false;
-
+// log in func
    logIn()async{
      setState(() {
        isloading=true;
@@ -114,8 +116,8 @@ setState(() {
                   ),
                   ),
 
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
+                 Column(
+                   crossAxisAlignment: CrossAxisAlignment.end,
                    children: [
                      TextButton(
                         child: const Text('Forget password?',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 20),),
@@ -123,9 +125,26 @@ setState(() {
                           Get.to(()=>Forgot());
                         },
                       ),
+                     ElevatedButton(
+
+                       child: const Text('SignUp with phone Number',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 16),),
+                       onPressed: (){
+                         Get.to(()=>PhoneScreen());
+                       },
+                     ),
+                     ElevatedButton(
+                       child: Row(
+                         children: [
+
+                           const Text('GOOGLE logIn',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 17),),
+                         ],
+                       ),
+                       onPressed: (){
+                         Get.to(()=>google_signIn());
+                       },
+                     ),
                    ],
                  ),
-
               ],
             ),
           ),

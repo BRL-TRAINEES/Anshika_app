@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:form/pages/googleSignIn.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,7 +14,7 @@ class _HomeState extends State<Home> {
   @override
 
  void signout()async{
-    await FirebaseAuth.instance.signOut();
+     FirebaseAuth.instance.signOut();
   }
 
   Widget build(BuildContext context) {
