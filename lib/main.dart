@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {  // this builds the UI of the widgets
     return GetMaterialApp(   // uses GetMaterial not Material wheneven we want to access methods of GEtX - getx-simple liberary that provides direct methods to go to any other screen and some popup methods to display any notification
+      debugShowCheckedModeBanner: false,
       title: 'Form App',
       home:Wrapper(),    //The Wrapper widget serves as the starting point of the app, which checks the user's authentication state and decides which screen to display.
 

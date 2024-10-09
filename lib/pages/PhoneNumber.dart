@@ -14,12 +14,18 @@ class _PhoneScreenState extends State<PhoneScreen> {
   TextEditingController phonenumber = TextEditingController();
 
   sendotp()async{
+    if (phonenumber.text.isEmpty || phonenumber.text.length != 10) {
+      Get.snackbar('Error', 'Please enter a valid 10-digit phone number.', backgroundColor: Colors.white);
+      return;
+    }
     try{
      await FirebaseAuth.instance.verifyPhoneNumber(  //verifyPhoneNumber is a inbuild function that itself provides the various methods
+
          phoneNumber: '+91${phonenumber.text}', //at which we want to send otp
        verificationCompleted: (PhoneAuthCredential credential)async{
          await FirebaseAuth.instance.signInWithCredential(credential);
        }, // function used when we want otp aaye aur vo direct fillout hoke aage proceed kre toh tabh uske leye isme vo code likhte h
+
        verificationFailed: (FirebaseAuthException e) {
          String message = '';
          switch (e.code) {
@@ -32,7 +38,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
          Get.snackbar('Error', message, backgroundColor: Colors.white);
        },
          codeSent:(String vi,int? token)async{  // this function trigger when otp is send and in this we defined func that we want to happen after otp send , here we are just moving to otp screen
-           Get.to(()=>OtpPage(vid:vi),);  // token is required in case if otp expired
+           Get.to(()=>OtpPage(vid:vi));  // token is required in case if otp expired
          },
        codeAutoRetrievalTimeout: (String verificationId) {
          Get.snackbar('Error', 'OTP expired. Please try again.', backgroundColor: Colors.white);
