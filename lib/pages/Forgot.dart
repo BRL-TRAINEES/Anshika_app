@@ -28,8 +28,9 @@ class _ForgotState extends State<Forgot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.purple,
         title: Text('Reset Password', style: TextStyle(color: Colors.white),),
       ),
       body: Center(
@@ -45,7 +46,7 @@ class _ForgotState extends State<Forgot> {
 
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.purple,
                   ),
                   child: const Text('Send Link',
                     style: TextStyle(color: Colors.white, fontSize: 20),),

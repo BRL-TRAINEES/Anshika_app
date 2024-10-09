@@ -55,6 +55,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
         title: Text('Login with PhoneNumber'),

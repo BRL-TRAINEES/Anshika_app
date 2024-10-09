@@ -19,6 +19,16 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  bool _obsecureText =true;
+
+
+  void _toggglePasswordVisibility(){
+    setState(() {
+      _obsecureText  = !_obsecureText;
+    });
+  }
+
+
  bool isloading =false;
 // log in func
    logIn()async{
@@ -43,6 +53,7 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     return isloading? Center(child: CircularProgressIndicator(),):Scaffold(  //means if loading is true then loading icon show hoga else scaffold
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(0, 80, 90, 1),
         title: Text('Login' , style: TextStyle(color: Colors.white),),
@@ -54,13 +65,11 @@ setState(() {
           child: Form(
             key: _formKey,
             child: OverflowBar(
-              overflowSpacing:30, //set space of 20 between all the widgets present in it
+              overflowSpacing:35, //set space of 20 between all the widgets present in it
               children: [
                 TextFormField(
-
-
                   controller: email,
-                  cursorColor: Colors.green,
+                  cursorColor: Color.fromRGBO(0, 80, 90, 1),
                   decoration:  InputDecoration(
                     labelText:'Email ID',
                     prefixIcon: Icon(Icons.email_sharp),
@@ -75,11 +84,15 @@ setState(() {
                 TextFormField(
                   controller: password,
                   cursorColor: Colors.green,
-                  obscureText: true,
+                  obscureText: _obsecureText,
                   decoration:  InputDecoration(
                     labelText:'Password',
                     prefixIcon: Icon(Icons.password_sharp),
                     prefixIconColor: Color.fromRGBO(0, 80, 90, 1),
+                    suffixIcon: IconButton(onPressed:_toggglePasswordVisibility,
+                        icon: Icon(_obsecureText ? Icons.visibility_off:Icons.visibility)
+                    ),
+                    suffixIconColor:Color.fromRGBO(0, 80, 90, 1),
                     border: OutlineInputBorder(
                         borderSide: BorderSide(color: Color.fromRGBO(0, 10, 90, 1),width: 3),
                         borderRadius: BorderRadius.circular(10)
@@ -125,23 +138,31 @@ setState(() {
                           Get.to(()=>Forgot());
                         },
                       ),
-                     ElevatedButton(
 
-                       child: const Text('SignUp with phone Number',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 16),),
-                       onPressed: (){
-                         Get.to(()=>PhoneScreen());
-                       },
-                     ),
-                     ElevatedButton(
-                       child: Row(
-                         children: [
-
-                           const Text('GOOGLE logIn',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 17),),
-                         ],
+                     Container(
+                         margin: EdgeInsets.all(16.0),
+                       child: Center(
+                         child: ElevatedButton(
+                           style: ElevatedButton.styleFrom(
+                             minimumSize: Size(200, 50), // Set the desired minimum size
+                           ),
+                           child: const Text('SignUp with phone Number',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 16),),
+                           onPressed: (){
+                             Get.to(()=>PhoneScreen());
+                           },
+                         ),
                        ),
-                       onPressed: (){
-                         Get.to(()=>google_signIn());
-                       },
+                     ),
+                     Center(
+                       child: ElevatedButton(
+                         child: Text('Login with GOOGLE',style: TextStyle(color: Color.fromRGBO(0, 80, 90, 1),fontSize: 17),),
+                         style: ElevatedButton.styleFrom(
+                           minimumSize: Size(230, 50), // Set the desired minimum size
+                         ),
+                         onPressed: (){
+                           Get.to(()=>google_signIn());
+                         },
+                       ),
                      ),
                    ],
                  ),

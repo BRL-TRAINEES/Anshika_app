@@ -42,7 +42,7 @@ class _VerifyState extends State<Verify> {
         title: Text('Email Verification' , style: TextStyle(color: Colors.white),),
       ),
       body: Padding(padding: const EdgeInsets.all(30),
-      child: Center(child: Text('click on link provided to mail for verification then click on button below to proceed for register',style: TextStyle(fontSize: 20 , color: Colors.black),)),
+      child: Center(child: Text('click on link provided to mail for verification then click on button below to proceed',style: TextStyle(fontSize: 20 , color: Colors.black),)),
       ),
     floatingActionButton: FloatingActionButton(onPressed:reload, child:  Icon(Icons.arrow_circle_right),),
     

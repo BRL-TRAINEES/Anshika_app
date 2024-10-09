@@ -45,6 +45,7 @@ class _google_signInState extends State<google_signIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(100, 0,40, 1),
         title: Text('Sign In with Google' ,style: TextStyle(color: Colors.white),),
@@ -60,11 +61,14 @@ class _google_signInState extends State<google_signIn> {
                 onPressed: google,
                 child: Text('Google signIn',style: TextStyle(color: Colors.white),)
             ),
-            TextButton(
-              child: const Text('SignUp',style: TextStyle(color: Color.fromRGBO(100, 0, 40, 1),fontSize: 20),),
-              onPressed: (){
-                Get.to(()=>Signup());
-              },
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              child: TextButton(
+                child: const Text('SignUp with email',style: TextStyle(color: Color.fromRGBO(100, 0, 40, 1),fontSize: 20),),
+                onPressed: (){
+                  Get.to(()=>Signup());
+                },
+              ),
             ),
           ],
         ),

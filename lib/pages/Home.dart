@@ -29,13 +29,16 @@ class _HomeState extends State<Home> {
         if (isGoogle) {
           // Sign out from Google Sign-In
           await GoogleSignIn().signOut().then((value)=>{
+            Get.snackbar("Log out!!",'',backgroundColor: Colors.white),
           Get.offAll(()=>LoginPage()),
           });
           print('User signed out from Google.');
         }
 
         // Sign out from Firebase (this will also sign out users signed in with email)
-        await FirebaseAuth.instance.signOut();
+        await FirebaseAuth.instance.signOut().then((value)=>{
+          Get.snackbar("Log out!!","",backgroundColor: Colors.white)
+        });
         print('User signed out from Firebase.');
       }
     }catch (e) {
@@ -49,6 +52,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(50,25, 100, 1),
           title: Text('Home Page' , style: TextStyle(color: Colors.white),),
@@ -56,7 +60,7 @@ class _HomeState extends State<Home> {
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Center(
-            child: Text('Welcome to the app', style: TextStyle(color: Color.fromRGBO(50,25, 100, 1),fontSize: 40,fontWeight: FontWeight.bold),),
+            child: Text('Welcome to the app! How Can We Help you Today?', style: TextStyle(color: Color.fromRGBO(50,25, 100, 1),fontSize: 40,fontWeight: FontWeight.bold),),
           ),
         ),
         floatingActionButton: FloatingActionButton(onPressed: signout,

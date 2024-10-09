@@ -20,6 +20,15 @@ class _SignupState extends State<Signup> {
   TextEditingController email= TextEditingController();
   TextEditingController password = TextEditingController();
 
+  bool _obsecureText =true;
+
+
+  void  _togglePasswordVisibility(){
+    setState(() {
+      _obsecureText  = !_obsecureText;
+    });
+  }
+  
  bool isloading = false;
 
     signIn() async {
@@ -46,8 +55,9 @@ class _SignupState extends State<Signup> {
     return Form(
       key: _formKey,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.blue,
           title: Text('Sign Up' , style: TextStyle(color: Colors.white),),
         ),
         body: isloading
@@ -69,13 +79,13 @@ class _SignupState extends State<Signup> {
                     }
                     return null;
                   },
-                  cursorColor: Colors.orange,
+                  cursorColor: Colors.blue,
                   decoration:  InputDecoration(
                     labelText:'Email ID',
                     prefixIcon: Icon(Icons.email_sharp),
-                    prefixIconColor: Colors.orange,
+                    prefixIconColor: Colors.blue,
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.orange,width: 3),
+                        borderSide: BorderSide(color: Colors.blue,width: 3),
                         borderRadius: BorderRadius.circular(10)
                     ),
                   ),
@@ -83,7 +93,7 @@ class _SignupState extends State<Signup> {
 
                 TextFormField(
                   controller: password,
-                  obscureText: true,
+                  obscureText:_obsecureText,
                   validator: (value){
                     if(value==null || value.isEmpty){
                       return 'Please Enter valid password';
@@ -92,10 +102,15 @@ class _SignupState extends State<Signup> {
                   },
                   decoration:  InputDecoration(
                     hintText:'Password',
+                    
                     prefixIcon: Icon(Icons.password_rounded),
-                    prefixIconColor: Colors.orange,
+                    prefixIconColor: Colors.blue,
+                    suffixIcon: IconButton(onPressed: _togglePasswordVisibility ,
+                        icon: Icon(_obsecureText? Icons.visibility_off:Icons.visibility)
+                    ),
+                    suffixIconColor: Colors.blue,
                     border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.orange,width: 3),
+                        borderSide: BorderSide(color: Colors.blue,width: 3),
                         borderRadius: BorderRadius.circular(8)
                     ),
                   ),
@@ -107,7 +122,7 @@ class _SignupState extends State<Signup> {
 
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.blue,
                     ),
                     child: const Text('Sign Up',style: TextStyle(color: Colors.white,fontSize: 20),),
                     onPressed:(()=>signIn()),
